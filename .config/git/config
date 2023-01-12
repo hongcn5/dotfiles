@@ -1,0 +1,27 @@
+[user]
+	name = hong
+	email = hongcn5@gmail.com
+[core]
+  pager = delta
+	quotepath = false
+	editor = nvim
+[https "https://github.com"]
+	proxy = http://127.0.0.1:1087
+[http "https://github.com"]
+	proxy = http://127.0.0.1:1087
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+  line-numbers = true
+  navigate = true    # use n and N to move between diff sections
+
+[merge]
+  conflictstyle = diff3
+
+[diff]
+  colorMoved = default
+[http]
+	postBuffer = 1024M
+	version = HTTP/1.1

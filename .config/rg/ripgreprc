@@ -1,0 +1,12 @@
+# 使用全局模式包括/排除文件或文件夹
+--glob=!.cache/*
+--glob=!.zcompcache/*
+
+--column
+--line-number
+--no-heading
+--color=always
+--smart-case
+--hidden
+--ignore-global
+

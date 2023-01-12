@@ -1,0 +1,14 @@
+gui:
+  theme:
+    # ==> light mode
+    # selectedLineBgColor:
+    #   - white
+    # selectedRangeBgColor:
+    #   - white
+    # defaultFgColor:
+      # - black
+    # ==> dark mode
+    selectedLineBgColor:
+     - cyan
+    selectedRangeBgColor:
+     - blue

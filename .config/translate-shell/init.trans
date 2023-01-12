@@ -1,0 +1,10 @@
+{
+ :translate-shell "0.9.0"
+ :verbose         false
+ :hl              "en"
+ :tl              "zh"
+ :ip-version      4
+ :proxy           "http://127.0.0.1:1087"
+ :theme           "happiness.trans"
+}
+

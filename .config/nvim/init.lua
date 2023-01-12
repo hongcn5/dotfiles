@@ -1,0 +1,8 @@
+require "user.options"
+require "user.keymaps"
+require "user.plugins"
+require "user.nvim-tree"
+require "user.cmp"
+require "user.autopairs"
+require "user.bufferline"
+require "user.colorscheme"

@@ -1,0 +1,70 @@
+{
+    "pri": {
+        "prefix": "pri...",
+        "body": [
+            "println!(\"{}\",${1});",
+            "${2}"
+        ],
+        "description": "print snippets"
+    },
+    "st": {
+        "prefix": "st...",
+        "body": [
+            "struct ${1:Name} {",
+            "    ${2}: ${3}",
+            "}"
+        ],
+        "description": "struct snippets"
+    },
+    "pub struct": {
+        "prefix": "pub struct...",
+        "body": [
+            "pub struct ${1:Name} {",
+            "    ${2}",
+            "}",
+            "${3}"
+        ],
+        "description": "pub struct snippets"
+    },
+    "fn": {
+        "prefix": "fn...",
+        "body": [
+            "fn ${1}(${2}) -> ${3} {",
+            "    ${4}",
+            "}",
+            "${5}"
+        ],
+        "description": "fn snippets"
+    },
+    "pub fn": {
+        "prefix": "pub fn...",
+        "body": [
+            "pub fn ${1}(${2}) -> ${3} {",
+            "    ${4}",
+            "}",
+            "${5}"
+        ],
+        "description": "pub fn snippets"
+    },
+    "stdout": {
+        "prefix": "std...out",
+        "body": [
+            "std::io::Stdout${1}"
+        ],
+        "description": "std::io::Stdout"
+    },
+    "stdin": {
+        "prefix": "std...in",
+        "body": [
+            "std::io::Stdin${1}"
+        ],
+        "description": "std::io::Stdin"
+    },
+    "stderr": {
+        "prefix": "std...error",
+        "body": [
+            "std::io::Error${1}"
+        ],
+        "description": "std::io::Error"
+    }
+}
