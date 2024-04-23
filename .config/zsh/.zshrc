@@ -53,8 +53,6 @@ export PATH=$HOME/.local/bin:$PATH
 
 ## bin
 export PATH=$XDG_CONFIG_HOME/bin:$PATH
-## ripgrep
-export RIPGREP_CONFIG_PATH=$XDG_CONFIG_HOME/rg/ripgreprc
 
 ## node
 export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
@@ -67,6 +65,9 @@ export REDISCLI_HISTFILE=$XDG_DATA_HOME/redis/.rediscli_history
 ## rust
 export CARGO_HOME=$XDG_DATA_HOME/cargo
 export RUSTUP_HOME=$XDG_DATA_HOME/rustup
+
+## ripgrep
+export RIPGREP_CONFIG_PATH=$XDG_CONFIG_HOME/rg/ripgreprc
 
 # ============================================== zsh ==============================================
 ## zsh-vi-mode
@@ -85,6 +86,7 @@ zvm_before_init() {
   ZVM_INSERT_MODE_CURSOR=$ncur'\e\e]12;#929292\a'
   ZVM_NORMAL_MODE_CURSOR=$ncur'\e\e]12;#008800\a'
 }
+
 zvm_config() {
   ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
   ZVM_VI_ESCAPE_BINDKEY=jk
@@ -105,18 +107,16 @@ source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 [ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
 
 ## zsh-completions
-## $XDG_DATA_HOME/zsh-completions 是本地命令补全目录
 if type brew &>/dev/null; then
 	FPATH=$XDG_DATA_HOME/zsh-completions:$(brew --prefix)/share/zsh-completions:$FPATH
 
 	autoload -Uz compinit
 	compinit
-  # 忽略大小写
+  ## 忽略大小写
   zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
   zstyle ':completion:*' menu select
   zmodload zsh/complist
   
-  ## bindkey
   bindkey -M menuselect 'h' vi-backward-char
   bindkey -M menuselect 'k' vi-up-line-or-history
   bindkey -M menuselect 'l' vi-forward-char
@@ -133,20 +133,27 @@ export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null \
     || bat --style=numbers --color=always --line-range :500 {} \
     || tree -n {}) 2> /dev/null | head -200' \
     --select-1 --exit-0"
+
 ## Ctrl-R --> 选择历史命令
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
+
 ## Alt-C  --> cd 到选择文件目录
 export FZF_ALT_C_OPTS="--preview 'tree -n -L 2 {} | head -200'"
 
 ## 默认外观参数
 export FZF_DEFAULT_OPTS="--height 60% --layout=reverse --border \
-    --color=hl:#ca4238,hl+:#ca4238,info:#95a0a0"
+    --color=hl:#ca4238,hl+:#ca4238,info:#95a0a0,fg+:#97f676"
+
 ## 默认命令参数
 export FZF_DEFAULT_COMMAND="fd --hidden --follow --type f \
     --exclude={.git,.cache,.zcompcache,.zsh_sessions}"
+
+## fd ==> path candidates
 _fzf_compgen_path() {
   fd --hidden --follow --exclude={.git,.cache,.zcompcache,.zsh_sessions} . "$1"
 }
+
+## fd ==> dir candidates
 _fzf_compgen_dir() {
   fd --type d --hidden --follow --exclude={.git,.cache,.zcompcache,.zsh_sessions} . "$1"
 }
@@ -155,12 +162,13 @@ _fzf_comprun() {
   shift
 
   case "$command" in
-    cd)           fzf "$@" --preview 'tree -n -L 2 {} | head -200' ;;
-    export|unset) fzf "$@" --preview "eval 'echo \$'{}" ;;
-    ssh)          fzf "$@" --preview 'dig {}' ;;
-    *)            fzf "$@" ;;
+    cd)           fzf --preview 'tree -C {} | head -200'   "$@" ;;
+    export|unset) fzf --preview "eval 'echo \$'{}"         "$@" ;;
+    ssh)          fzf --preview 'dig {}'                   "$@" ;;
+    *)            fzf --preview 'bat -n --color=always {}' "$@" ;;
   esac
 }
+
 ## autojump
 j() {
     if [[ "$#" -ne 0 ]]; then
@@ -169,6 +177,7 @@ j() {
     fi
     cd "$(autojump -s | sort -k1gr | awk '$1 ~ /[0-9]:/ && $2 ~ /^\// { for (i=2; i<=NF; i++) { if (i<NF) { printf "%s ", $(i) } else { print $(i) } } }' |  fzf --height 20% --reverse --inline-info)" 
 }
+
 ## linux-command 搭配 fzf
 fl() {
   dir="$HOME/Documents/linux-command/command"
@@ -187,7 +196,7 @@ fl() {
 
 zvm_after_init() {
     ## fzf 和 zsh-vi-mode 不兼容，在 zsh-vi-mode 后加载 fzf 配置
-    [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
+    eval "$(fzf --zsh)"
 
     ## forgit
     export FORGIT_FZF_DEFAULT_OPTS="--exact --cycle --height '60%'"
@@ -195,16 +204,6 @@ zvm_after_init() {
 }
 
 # ============================================ other ==============================================
-## vivid
-vv() {
-    for theme in $(vivid themes); do
-        echo "Theme: $theme"
-        LS_COLORS=$(vivid generate $theme)
-        eza
-        echo
-    done
-}
-
 ## yazi
 function yy() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"

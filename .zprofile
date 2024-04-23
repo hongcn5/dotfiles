@@ -8,3 +8,9 @@ export XDG_DATA_HOME=$HOME/.local/share
 
 ## zdotdir
 export ZDOTDIR=$HOME/.config/zsh
+
+## less hst
+export LESSHISTFILE=-
+
+## rust
+## . "/Users/hong/.local/share/cargo/env"

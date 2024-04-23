@@ -101,11 +101,8 @@ lvim.plugins = {
     {
         "iamcco/markdown-preview.nvim",
         cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-        build = "cd app && npm install",
-        init = function()
-            vim.g.mkdp_filetypes = { "markdown" }
-        end,
         ft = { "markdown" },
+        build = function() vim.fn["mkdp#util#install"]() end,
     },
     -- 右下角lsp加载视图
     {
@@ -291,3 +288,14 @@ lvim.builtin.nvimtree.setup.actions.open_file.resize_window = true
 
 -- bug fix for colorizer
 require('colorizer').setup()
+
+-- lemminx cache location
+require('lspconfig').lemminx.setup({
+    settings = {
+        xml = {
+            server = {
+                workDir = "~/.cache/lemminx",
+            }
+        }
+    }
+})

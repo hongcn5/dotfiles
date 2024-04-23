@@ -45,7 +45,7 @@ border_symbol = "│"
 border_style  = { fg = "gray" }
 
 # Highlighting
-syntect_theme = "~/.config/yazi/night-owlish.tmTheme"
+syntect_theme = ""
 
 # : }}}
 
