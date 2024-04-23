@@ -214,8 +214,8 @@ function yy() {
 }
 
 # ============================================= tmux ==============================================
-alias tnew='tmux new -s'
-alias tat='tmux at -t'
+alias tnew='tmux -u new -s'
+alias tat='tmux -u at -t'
 alias tdt='tmux detach'
 alias tls='tmux ls'
 alias tkill='tmux kill-session -t'

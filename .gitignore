@@ -6,7 +6,6 @@
 .config/lazygit/state.yml
 .config/lvim/lazy-lock.json
 .config/nvim/lazy-lock.json
-.config/zsh/.zsh_history
 Brewfile.lock.json
 .config/karabiner/karabiner.json
 .config/neofetch

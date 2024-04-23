@@ -98,12 +98,14 @@ lvim.plugins = {
     -- colorizer
     { "norcalli/nvim-colorizer.lua" },
     -- markdown-preview
-    -- install without yarn or npm
     {
         "iamcco/markdown-preview.nvim",
         cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+        build = "cd app && npm install",
+        init = function()
+            vim.g.mkdp_filetypes = { "markdown" }
+        end,
         ft = { "markdown" },
-        build = function() vim.fn["mkdp#util#install"]() end,
     },
     -- 右下角lsp加载视图
     {
