@@ -28,7 +28,6 @@ alias gl='curl -vv google.com'
 
 ## commonly use
 alias ll='ls -alG'
-alias exa='eza'
 alias eza='eza -alrs type --icons'
 
 alias bat='bat --theme=Dracula'
@@ -40,6 +39,9 @@ alias wget='wget --no-hsts'
 
 ## lazygit
 alias lg='cd $(readlink -f .) && lazygit'
+
+## ncdu
+alias ncdu='ncdu --color dark'
 
 # ============================================ common =============================================
 ## homebrew
