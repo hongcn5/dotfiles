@@ -1,5 +1,7 @@
 ## homebrew
 eval $(/opt/homebrew/bin/brew shellenv)
+## local custom install
+export HOMEBREW_NO_INSTALL_FROM_API=1
 
 ## xdg
 export XDG_CONFIG_HOME=$HOME/.config

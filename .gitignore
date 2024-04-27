@@ -10,3 +10,4 @@ Brewfile.lock.json
 .config/karabiner/karabiner.json
 .config/neofetch
 .config/tmux/plugins
+.DS_Store

@@ -70,17 +70,10 @@ export RUSTUP_HOME=$XDG_DATA_HOME/rustup
 export RIPGREP_CONFIG_PATH=$XDG_CONFIG_HOME/rg/ripgreprc
 
 # ============================================== zsh ==============================================
-## zsh-vi-mode
-zvm_before_init() {
+## autojump
+[ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
 
-  ## gitstatus 
-  source /opt/homebrew/opt/gitstatus/gitstatus.prompt.zsh
-  # 终端PS1格式设置：'[hong@MacBook] ~(gitstatus) % '
-  # %# 普通用户为%,管理员为#
-  export prompt='%F{cyan}[%f%n%F{red}@%fMacBook%F{cyan}]%f %F{blue}%~%f '
-  prompt+='${GITSTATUS_PROMPT:+($GITSTATUS_PROMPT)}'
-  prompt+=$'\n'
-  prompt+='%F{cyan}$%f '
+zvm_before_init() {
 
   local ncur=$(zvm_cursor_style $ZVM_NORMAL_MODE_CURSOR)
   ZVM_INSERT_MODE_CURSOR=$ncur'\e\e]12;#929292\a'
@@ -95,6 +88,13 @@ zvm_config() {
   ZVM_VI_OPPEND_ESCAPE_BINDKEY=$ZVM_VI_ESCAPE_BINDKEY
   ZVM_VI_HIGHLIGHT_BACKGROUND=#519e97
 }
+
+zvm_after_init() {
+    ## fzf 和 zsh-vi-mode 不兼容，在 zsh-vi-mode 后加载 fzf 配置
+    eval "$(fzf --zsh)"
+}
+
+## zsh-vi-mode
 source /opt/homebrew/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
 ## zsh-autosuggestions
@@ -102,9 +102,6 @@ source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 ## zsh-auto-syntax-highlighting
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-## autojump
-[ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
 
 ## zsh-completions
 if type brew &>/dev/null; then
@@ -123,6 +120,18 @@ if type brew &>/dev/null; then
   bindkey -M menuselect 'j' vi-down-line-or-history
 fi
 
+## gitstatus 
+source /opt/homebrew/opt/gitstatus/gitstatus.prompt.zsh
+# 终端PS1格式设置：'[hong@MacBook] ~(gitstatus) % '
+# %# 普通用户为%,管理员为#
+export prompt='%F{cyan}[%f%n%F{red}@%fMacBook%F{cyan}]%f %F{blue}%~%f '
+prompt+='${GITSTATUS_PROMPT:+($GITSTATUS_PROMPT)}'
+prompt+=$'\n'
+prompt+='%F{cyan}$%f '
+
+## forgit
+export FORGIT_FZF_DEFAULT_OPTS="--exact --cycle --height '60%'"
+source /opt/homebrew/opt/forgit/share/forgit/forgit.plugin.zsh
 
 # ============================================= fzf ================================================
 ## 补全触发字符
@@ -194,16 +203,7 @@ fl() {
    fi
 }
 
-zvm_after_init() {
-    ## fzf 和 zsh-vi-mode 不兼容，在 zsh-vi-mode 后加载 fzf 配置
-    eval "$(fzf --zsh)"
-
-    ## forgit
-    export FORGIT_FZF_DEFAULT_OPTS="--exact --cycle --height '60%'"
-    source /opt/homebrew/opt/forgit/share/forgit/forgit.plugin.zsh
-}
-
-# ============================================ other ==============================================
+# ============================================= yazi ==============================================
 ## yazi
 function yy() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
@@ -220,6 +220,7 @@ alias tat='tmux -u at -t'
 alias tdt='tmux detach'
 alias tls='tmux ls'
 alias tkill='tmux kill-session -t'
+
 ## tmuxinator
 alias tn='tmuxinator'
 

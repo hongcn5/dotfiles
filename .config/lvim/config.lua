@@ -18,7 +18,7 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 -- =================================== 基本设置 ===================================
 -- 颜色方案
 -- wave | dragon | lotus
-lvim.colorscheme = "kanagawa-dragon"
+lvim.colorscheme = "kanagawa-wave"
 
 -- 基于treesitter语法折叠
 vim.opt.foldmethod = 'expr'
